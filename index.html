@@ -6,6 +6,7 @@
 <title>نبض بازار | داشبورد لحظه‌ای طلا، ارز و رمزارز</title>
 <meta name="description" content="پایش لحظه‌ای قیمت طلا، ارز و رمزارز، همراه با تقویم شمسی در یک داشبورد یکپارچه.">
 <meta name="theme-color" content="#1E8A55">
+<link rel="manifest" href="manifest.json">
 <meta property="og:title" content="نبض بازار | داشبورد لحظه‌ای طلا، ارز و رمزارز">
 <meta property="og:description" content="پایش لحظه‌ای قیمت طلا، ارز و رمزارز؛ همه در یک صفحه.">
 <meta property="og:type" content="website">
@@ -1309,6 +1310,12 @@
   }
 
 })();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
 </script>
 
 </body>
