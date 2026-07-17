@@ -524,6 +524,92 @@
     background: var(--accent);
   }
 
+  /* ---------- Advanced chart CTA ---------- */
+  #advanced-chart-cta{ padding: 8px 0 48px; }
+  .chart-cta{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: linear-gradient(120deg, var(--green-deep) 0%, var(--green) 55%, var(--green-bright) 100%);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    box-shadow: var(--shadow-lift);
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+  }
+  .chart-cta::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(220px 220px at 90% -20%, rgba(255,255,255,.18), transparent 60%),
+      radial-gradient(180px 180px at 105% 120%, rgba(255,255,255,.12), transparent 60%);
+    pointer-events: none;
+  }
+  .chart-cta:hover{ transform: translateY(-2px); box-shadow: 0 26px 50px -18px rgba(20,60,40,.4); }
+  .chart-cta:active{ transform: translateY(0) scale(.995); }
+  .chart-cta-icon{
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+  }
+  .chart-cta-icon svg{ width: 24px; height: 24px; }
+  .chart-cta-text{ flex: 1 1 auto; min-width: 0; position: relative; z-index: 1; }
+  .chart-cta-text .kicker{
+    display: inline-block;
+    font-size: .74rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.85);
+    background: rgba(255,255,255,.14);
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .chart-cta-text h2{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .chart-cta-text p{
+    font-size: .82rem;
+    color: rgba(255,255,255,.88);
+    max-width: 56ch;
+  }
+  .chart-cta-arrow{
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    transition: transform .3s cubic-bezier(.2,.8,.2,1);
+  }
+  .chart-cta-arrow svg{ width: 18px; height: 18px; }
+  .chart-cta:hover .chart-cta-arrow{ transform: translateX(-4px); }
+  @media (max-width: 640px){
+    .chart-cta{ flex-wrap: wrap; padding: 20px; gap: 14px; }
+    .chart-cta-arrow{ display: none; }
+    .chart-cta-text h2{ font-size: 1.08rem; }
+  }
+
   .card:hover{
     transform: translateY(-4px);
     border-color: color-mix(in srgb, var(--accent) 40%, var(--line-soft));
@@ -1175,6 +1261,7 @@
   <nav class="subnav">
     <div class="wrap">
       <a href="#markets">بازارها</a>
+      <a href="chart.html">نمودار پیشرفته</a>
       <a href="#why">چرا نبض بازار</a>
       <a href="#about">درباره ما</a>
     </div>
@@ -1364,6 +1451,25 @@
     </div>
   </section>
 
+  <!-- ============ Advanced chart CTA ============ -->
+  <section id="advanced-chart-cta">
+    <div class="wrap">
+      <a href="chart.html" class="chart-cta">
+        <div class="chart-cta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+        </div>
+        <div class="chart-cta-text">
+          <span class="kicker">رمزارز و بازارهای جهانی</span>
+          <h2>نمودار پیشرفته</h2>
+          <p>نمودار زنده و تعاملی هر نمادی که بخواهید؛ ارز دیجیتال، سهام، طلا و فارکس — با جست‌وجوی نماد و ابزار تحلیل تکنیکال کامل.</p>
+        </div>
+        <div class="chart-cta-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6l-6 6 6 6"/></svg>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- ============ Why us ============ -->
   <section class="alt" id="why">
     <div class="wrap">
@@ -1425,6 +1531,7 @@
     <div class="footer-brand"><b>نبض بازار</b> · داده‌ها از طریق tgju.org</div>
     <div class="footer-links">
       <a href="#markets">بازارها</a>
+      <a href="chart.html">نمودار پیشرفته</a>
       <a href="#about">درباره ما</a>
       <a href="mailto:arshamkhademi98@gmail.com">تماس با ما</a>
       <button class="share-pill" id="sharePill" type="button">
