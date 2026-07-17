@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>نمودار پیشرفته | نبض بازار</title>
+<meta name="description" content="نمودار زنده و تعاملی هر نمادی؛ ارز دیجیتال، سهام، طلا و فارکس — با جست‌وجوی نماد و ابزار تحلیل تکنیکال کامل.">
+<meta name="theme-color" content="#1E8A55">
+<link rel="manifest" href="manifest.json">
+<meta property="og:title" content="نمودار پیشرفته | نبض بازار">
+<meta property="og:description" content="نمودار زنده و تعاملی هر نمادی که بخواهید، با جست‌وجوی نماد و ابزار تحلیل تکنیکال کامل.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='19' fill='%231E8A55'/%3E%3Cpath d='M10 22 L15 22 L18 14 L22 28 L25 18 L28 22 L30 22' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://s3.tradingview.com" crossorigin>
+
+<style>
+  :root{
+    --bg: #FFFFFF;
+    --bg-soft: #F4FAF7;
+    --panel: #FFFFFF;
+    --panel-2: #EEF6F1;
+    --line: rgba(47,174,108,.18);
+    --line-soft: rgba(20,35,28,.09);
+    --ink: #16211C;
+    --muted: #5B6B62;
+    --muted-2: #93A099;
+    --green: #2FAE6C;
+    --green-bright: #3FC382;
+    --green-deep: #1E8A55;
+    --gold-accent: #C79A3D;
+    --gold-soft: #F8EFDC;
+    --crypto: #8B7FD6;
+    --currency: #3FA0C9;
+    --oil: #6B5B4A;
+    --index: #2FAE6C;
+    --radius: 18px;
+    --radius-sm: 12px;
+    --shadow: 0 10px 30px -14px rgba(20,60,40,.14);
+    --shadow-lift: 0 18px 40px -16px rgba(20,60,40,.22);
+    --font-display: 'Vazirmatn', Tahoma, sans-serif;
+    --font-body: 'Vazirmatn', Tahoma, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --accent-live: var(--gold-accent);
+    --accent-live-2: var(--green-bright);
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body.fs-lock{ overflow: hidden; height: 100%; }
+
+  ::selection{ background: var(--green-bright); color: #fff; }
+  a{ color: inherit; text-decoration: none; }
+  :focus-visible{ outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+  button{ font-family: inherit; }
+
+  .wrap{ max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(7px) saturate(140%);
+    -webkit-backdrop-filter: blur(7px) saturate(140%);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .header-inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    gap: 14px;
+  }
+
+  .brand{ display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+  .brand-mark{ width: 40px; height: 40px; flex-shrink: 0; }
+
+  .brand-name{
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.62rem;
+    letter-spacing: -.01em;
+    background: linear-gradient(95deg, var(--green-deep), var(--green-bright) 65%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .status{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: .84rem;
+    color: var(--muted);
+    background: var(--bg-soft);
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    padding: 6px 16px;
+  }
+
+  .clock-pill{ display: flex; align-items: center; gap: 8px; }
+
+  .live-dot{
+    position: relative;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+  .live-dot::after{
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: var(--green);
+    opacity: .55;
+    animation: pulseRing 2.2s ease-out infinite;
+  }
+  @keyframes pulseRing{ 0%{ transform: scale(.4); opacity: .55; } 100%{ transform: scale(1.6); opacity: 0; } }
+
+  .clock{
+    font-family: var(--font-mono);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: .86rem;
+    direction: ltr;
+    unicode-bidi: plaintext;
+  }
+
+  .subnav{
+    border-bottom: 1px solid var(--line-soft);
+    background: var(--bg);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .subnav::-webkit-scrollbar{ display: none; }
+  .subnav .wrap{
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 11px 28px;
+    width: max-content;
+    min-width: 100%;
+  }
+  .subnav a{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .82rem;
+    color: var(--muted);
+    white-space: nowrap;
+    padding: 3px 0;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .subnav a svg{ width: 14px; height: 14px; }
+  .subnav a:hover{ color: var(--green-deep); border-color: var(--line); }
+  .subnav a.active{ color: var(--green-deep); border-color: var(--green); font-weight: 600; }
+  .subnav .back-home{ margin-left: auto; }
+
+  /* ---------- Page hero ---------- */
+  .chart-hero{
+    position: relative;
+    padding: 36px 0 24px;
+    overflow: hidden;
+  }
+  .chart-hero-bg{
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: .5;
+    mask-image: radial-gradient(ellipse 75% 100% at 50% 0%, #000 10%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 100% at 50% 0%, #000 10%, transparent 78%);
+    pointer-events: none;
+  }
+  .chart-hero-inner{ position: relative; z-index: 1; text-align: center; }
+
+  h1{
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    line-height: 1.3;
+    letter-spacing: -.01em;
+    max-width: 720px;
+    margin: 0 auto 12px;
+    color: var(--ink);
+  }
+  h1 .accent{
+    background: linear-gradient(95deg, var(--green-deep), var(--green-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .chart-hero p{
+    color: var(--muted);
+    font-size: .98rem;
+    max-width: 560px;
+    margin: 0 auto 26px;
+  }
+
+  /* ---------- Symbol search (fancy) ---------- */
+  .symbol-search{
+    position: relative;
+    max-width: 560px;
+    margin: 0 auto 22px;
+  }
+  .symbol-search-box{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    padding: 4px 6px 4px 16px;
+    box-shadow: var(--shadow);
+    transition: border-color .22s, box-shadow .22s, transform .22s;
+  }
+  .symbol-search-box:focus-within{
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(47,174,108,.12), var(--shadow-lift);
+    transform: translateY(-1px);
+  }
+  .symbol-search-icon{
+    width: 18px; height: 18px;
+    color: var(--muted-2);
+    flex-shrink: 0;
+  }
+  .symbol-search-box:focus-within .symbol-search-icon{ color: var(--green-deep); }
+  .symbol-search-input{
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: .92rem;
+    color: var(--ink);
+    padding: 13px 0;
+  }
+  .symbol-search-input::placeholder{ color: var(--muted-2); }
+  .symbol-search-kbd{
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--muted-2);
+    border: 1px solid var(--line-soft);
+    background: var(--bg-soft);
+    border-radius: 6px;
+    padding: 3px 8px;
+    flex-shrink: 0;
+  }
+  .symbol-search-box:focus-within .symbol-search-kbd{ display: none; }
+  .symbol-search-clear{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: var(--panel-2);
+    color: var(--muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .18s, color .18s;
+  }
+  .symbol-search-clear:hover{ background: var(--line-soft); color: var(--ink); }
+
+  .symbol-search-panel{
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0; left: 0;
+    z-index: 40;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lift);
+    padding: 10px;
+    max-height: 380px;
+    overflow-y: auto;
+    text-align: right;
+    display: none;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .symbol-search-panel.show{ display: block; opacity: 1; transform: translateY(0); }
+
+  .symbol-search-group-label{
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--muted-2);
+    padding: 8px 10px 4px;
+  }
+  .symbol-search-empty{
+    padding: 22px 10px;
+    text-align: center;
+    font-size: .84rem;
+    color: var(--muted);
+  }
+
+  .symbol-search-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 9px 10px;
+    border-radius: 10px;
+    text-align: right;
+    transition: background .15s;
+  }
+  .symbol-search-item:hover,
+  .symbol-search-item.is-focused{ background: var(--bg-soft); }
+  .symbol-search-item-icon{
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--item-c, var(--green)) 16%, transparent);
+    color: var(--item-c, var(--green-deep));
+    flex-shrink: 0;
+  }
+  .symbol-search-item-icon svg{ width: 14px; height: 14px; }
+  .symbol-search-item-text{ min-width: 0; flex: 1; }
+  .symbol-search-item-name{
+    font-size: .86rem;
+    font-weight: 600;
+    color: var(--ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .symbol-search-item-code{
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--muted-2);
+    direction: ltr;
+    display: inline-block;
+  }
+  .symbol-search-item-fav{
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--muted-2);
+    cursor: pointer;
+    transition: color .18s, background .18s;
+  }
+  .symbol-search-item-fav:hover{ background: var(--panel-2); color: var(--gold-accent); }
+  .symbol-search-item-fav.is-fav{ color: var(--gold-accent); }
+  .symbol-search-item-fav svg{ width: 15px; height: 15px; }
+  .symbol-search-item-fav.is-fav svg{ fill: currentColor; }
+
+  /* ---------- Symbol quick chips ---------- */
+  .symbol-chips{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .symbol-chip{
+    --chip-c: var(--muted-2);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    padding: 8px 18px 8px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color .22s, background .22s, transform .22s, box-shadow .22s;
+  }
+  .symbol-chip .chip-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--chip-c) 16%, transparent);
+    color: var(--chip-c);
+    flex-shrink: 0;
+    transition: background .22s, color .22s;
+  }
+  .symbol-chip .chip-icon svg{ width: 13px; height: 13px; }
+  .symbol-chip:hover{
+    border-color: var(--chip-c);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px -14px rgba(20,60,40,.3);
+  }
+  .symbol-chip.active{
+    background: var(--chip-c);
+    border-color: var(--chip-c);
+    color: #fff;
+    box-shadow: var(--shadow-lift);
+  }
+  .symbol-chip.active .chip-icon{ background: rgba(255,255,255,.25); color: #fff; }
+
+  /* ---------- Chart section ---------- */
+  .chart-section{ padding: 18px 0 60px; }
+
+  .chart-card{
+    --accent: var(--accent-live);
+    --accent-2: var(--accent-live-2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .chart-card::before{
+    content: "";
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(95deg, var(--accent), var(--accent-2));
+    z-index: 2;
+    transition: background .35s ease;
+  }
+
+  .chart-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line-soft);
+    background: linear-gradient(180deg, var(--bg-soft), var(--panel));
+    flex-shrink: 0;
+  }
+
+  .chart-toolbar-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .chart-toolbar-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    flex-shrink: 0;
+    transition: background .35s ease;
+  }
+  .chart-toolbar-icon svg{ width: 14px; height: 14px; }
+
+  .chart-toolbar-text{ min-width: 0; }
+  .chart-toolbar-label{
+    font-weight: 700;
+    font-size: .84rem;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .chart-toolbar-sub{ font-size: .7rem; color: var(--muted-2); }
+
+  .chart-toolbar-actions{ display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+  .icon-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--green-deep);
+    cursor: pointer;
+    transition: background .2s, border-color .2s, transform .15s;
+  }
+  .icon-btn:hover{ background: var(--panel-2); transform: translateY(-1px); }
+  .icon-btn:active{ transform: translateY(0) scale(.94); }
+  .icon-btn svg{ width: 15px; height: 15px; }
+
+  .fs-btn{
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border: none;
+    color: #fff;
+  }
+  .fs-btn:hover{ filter: brightness(1.06); background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+  .fs-btn svg{ width: 15px; height: 15px; }
+
+  /* ---------- Widget area ---------- */
+  .chart-widget-area{
+    position: relative;
+    height: 62vh;
+    min-height: 400px;
+    max-height: 680px;
+  }
+
+  .tradingview-widget-container,
+  .tradingview-widget-container__widget{
+    height: 100%;
+    width: 100%;
+  }
+
+  /* ---------- Loading skeleton ---------- */
+  .chart-loading{
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: var(--panel);
+    transition: opacity .3s ease;
+  }
+  .chart-loading[hidden]{ display: none; }
+
+  .skeleton-bars{
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 46px;
+  }
+  .skeleton-bars i{
+    width: 6px;
+    border-radius: 3px;
+    background: var(--panel-2);
+    animation: barPulse 1.1s ease-in-out infinite;
+  }
+  .skeleton-bars i:nth-child(1){ height: 18px; animation-delay: 0s; }
+  .skeleton-bars i:nth-child(2){ height: 32px; animation-delay: .1s; }
+  .skeleton-bars i:nth-child(3){ height: 46px; animation-delay: .2s; }
+  .skeleton-bars i:nth-child(4){ height: 26px; animation-delay: .3s; }
+  .skeleton-bars i:nth-child(5){ height: 38px; animation-delay: .4s; }
+  @keyframes barPulse{ 0%,100%{ opacity: .35; transform: scaleY(.7); } 50%{ opacity: 1; transform: scaleY(1); } }
+
+  .chart-loading span{ font-size: .86rem; color: var(--muted); }
+
+  /* ---------- Error state ---------- */
+  .chart-error{
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: var(--panel);
+    text-align: center;
+    padding: 24px;
+  }
+  .chart-error.show{ display: flex; }
+  .chart-error-icon{
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(229,72,77,.1);
+    color: #E5484D;
+  }
+  .chart-error-icon svg{ width: 26px; height: 26px; }
+  .chart-error h3{ font-size: 1rem; color: var(--ink); }
+  .chart-error p{ font-size: .85rem; color: var(--muted); max-width: 340px; }
+  .retry-btn{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--green-deep);
+    background: var(--green-deep);
+    color: #fff;
+    font-size: .84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .retry-btn:hover{ background: var(--green); }
+  .retry-btn svg{ width: 15px; height: 15px; }
+
+  /* ---------- Custom fullscreen (CSS-driven, no Fullscreen-API dependency) ---------- */
+  .chart-card.is-fullscreen{
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    border-radius: 0;
+    border: none;
+    max-height: none;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+  }
+  .chart-card.is-fullscreen .chart-widget-area{
+    height: auto;
+    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .chart-card.is-fullscreen .chart-toolbar{ flex-shrink: 0; }
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: #fff;
+    font-size: .84rem;
+    font-weight: 600;
+    padding: 11px 20px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-lift);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  .toast svg{ width: 16px; height: 16px; color: var(--green-bright); flex-shrink: 0; }
+  .toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top: 1px solid var(--line-soft);
+    background: var(--bg-soft);
+    padding: 22px 0;
+  }
+  .footer-inner{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: .82rem;
+    color: var(--muted);
+  }
+  .footer-inner a{ color: var(--green-deep); font-weight: 600; }
+  .footer-inner a:hover{ text-decoration: underline; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .wrap{ padding: 0 18px; }
+  }
+  @media (max-width: 640px){
+    .brand-name{ font-size: 1.28rem; }
+    .brand-mark{ width: 32px; height: 32px; }
+    .status{ padding: 5px 12px; gap: 8px; font-size: .78rem; }
+    .subnav .wrap{ padding: 9px 18px; gap: 16px; }
+    .subnav a{ font-size: .78rem; }
+    .chart-hero{ padding: 26px 0 18px; }
+    .chart-card{ border-radius: 14px; }
+    .chart-widget-area{ height: 58vh; min-height: 380px; }
+    .chart-toolbar{ padding: 9px 11px; }
+    .chart-toolbar-sub{ display: none; }
+    .icon-btn{ width: 30px; height: 30px; }
+  }
+  @media (max-width: 380px){
+    .brand-name{ font-size: 1.12rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Header ============ -->
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="بازگشت به نبض بازار">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <circle cx="20" cy="20" r="18" stroke="url(#markGrad)" stroke-width="1.6"/>
+        <path d="M10 22 L15 22 L18 14 L22 28 L25 18 L28 22 L30 22" stroke="url(#markGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <defs>
+          <linearGradient id="markGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#3FC382"/>
+            <stop offset="1" stop-color="#1E8A55"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-name">نبض بازار</span>
+    </a>
+    <div class="status">
+      <div class="clock-pill">
+        <span class="live-dot" title="پایش زنده" aria-label="پایش زنده"></span>
+        <span class="clock"><span id="clockHM">--:--</span><span id="clockSec">:--</span></span>
+      </div>
+    </div>
+  </div>
+  <nav class="subnav">
+    <div class="wrap">
+      <a href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        خانه
+      </a>
+      <a href="index.html#markets">بازارها</a>
+      <a href="index.html#about">درباره ما</a>
+      <a class="active back-home" href="javascript:void(0)" aria-current="page" tabindex="-1">نمودار پیشرفته</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ Page hero ============ -->
+<section class="chart-hero">
+  <svg class="chart-hero-bg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+    <defs>
+      <pattern id="girihChart" width="90" height="90" patternUnits="userSpaceOnUse">
+        <g stroke="#2FAE6C" stroke-width="1" fill="none" opacity="0.3">
+          <rect x="20" y="20" width="50" height="50" transform="rotate(45 45 45)"/>
+          <circle cx="45" cy="45" r="6"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="800" height="300" fill="url(#girihChart)"/>
+  </svg>
+
+  <div class="wrap chart-hero-inner">
+    <h1>نمودار <span class="accent">پیشرفته</span> هر نماد بازار</h1>
+    <p>هر نمادی که بخواهید را جست‌وجو کنید؛ ارز دیجیتال، طلا، فارکس یا سهام جهانی — با ابزار تحلیل تکنیکال کامل.</p>
+
+    <div class="symbol-search" id="symbolSearch">
+      <div class="symbol-search-box">
+        <svg class="symbol-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="symbolSearchInput" class="symbol-search-input" placeholder="نام نماد را جست‌وجو کنید… مثلاً بیت‌کوین، طلا، اپل" autocomplete="off" spellcheck="false" aria-label="جست‌وجوی نماد" aria-expanded="false" role="combobox" aria-controls="symbolSearchResults">
+        <kbd class="symbol-search-kbd">/</kbd>
+        <button type="button" class="symbol-search-clear" id="symbolSearchClear" aria-label="پاک کردن جست‌وجو" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="symbol-search-panel" id="symbolSearchResults" role="listbox"></div>
+    </div>
+
+    <div class="symbol-chips" id="symbolChips">
+      <button type="button" class="symbol-chip" style="--chip-c:#C79A3D" data-symbol="OANDA:XAUUSD" data-label="طلا (XAU/USD)">
+        <span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c0-1.1 1.3-2 3-2s3 .8 3 1.8c0 2.4-6 1.2-6 3.6 0 1 1.3 1.8 3 1.8s3-.9 3-2"/></svg></span>
+        طلا
+      </button>
+      <button type="button" class="symbol-chip active" style="--chip-c:#8B7FD6" data-symbol="BINANCE:BTCUSDT" data-label="بیت‌کوین (BTC/USDT)">
+        <span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M11 3v18M7 7h6.5a3 3 0 0 1 0 6H7m0 0h7a3 3 0 0 1 0 6H7"/></svg></span>
+        بیت‌کوین
+      </button>
+      <button type="button" class="symbol-chip" style="--chip-c:#8B7FD6" data-symbol="BINANCE:ETHUSDT" data-label="اتریوم (ETH/USDT)">
+        <span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 5 13l7 4 7-4z"/><path d="M5 15l7 7 7-7"/></svg></span>
+        اتریوم
+      </button>
+      <button type="button" class="symbol-chip" style="--chip-c:#3FA0C9" data-symbol="FX:EURUSD" data-label="یورو / دلار (EUR/USD)">
+        <span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 9a3.2 3.2 0 0 1 3-2c1.8 0 3.2 1.3 3.2 3s-1.4 3-3.2 3a3.2 3.2 0 0 1-3-2M7 10.5h4M7 13h4"/></svg></span>
+        یورو/دلار
+      </button>
+      <button type="button" class="symbol-chip" style="--chip-c:#6B5B4A" data-symbol="TVC:USOIL" data-label="نفت خام آمریکا (WTI)">
+        <span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 3.5 5 6.8 5 9.8a5 5 0 0 1-10 0C7 8.8 9 5.5 12 2z"/></svg></span>
+        نفت خام
+      </button>
+      <button type="button" class="symbol-chip" style="--chip-c:#2FAE6C" data-symbol="FOREXCOM:SPXUSD" data-label="شاخص S&amp;P 500">
+        <span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+        S&amp;P 500
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Chart ============ -->
+<main class="chart-section">
+  <div class="wrap">
+    <div class="chart-card" id="chartCard">
+      <div class="chart-toolbar">
+        <div class="chart-toolbar-info">
+          <span class="chart-toolbar-icon" id="toolbarIcon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+          </span>
+          <div class="chart-toolbar-text">
+            <div class="chart-toolbar-label" id="toolbarLabel">بیت‌کوین (BTC/USDT)</div>
+            <div class="chart-toolbar-sub">برای جست‌وجوی نماد دیگر، روی نام نماد در نمودار بزنید</div>
+          </div>
+        </div>
+        <div class="chart-toolbar-actions">
+          <button type="button" class="icon-btn" id="copyLinkBtn" title="کپی لینک این نمودار" aria-label="کپی لینک این نمودار">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.36-1.36"/></svg>
+          </button>
+          <button type="button" class="icon-btn" id="reloadBtn" title="بارگذاری مجدد نمودار" aria-label="بارگذاری مجدد نمودار">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v6h-6"/></svg>
+          </button>
+          <button type="button" class="icon-btn fs-btn" id="fsBtn" title="تمام‌صفحه" aria-label="تمام‌صفحه">
+            <svg id="fsIconExpand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            <svg id="fsIconCompress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M9 3v4a1 1 0 0 1-1 1H4M15 3v4a1 1 0 0 0 1 1h4M9 21v-4a1 1 0 0 0-1-1H4M15 21v-4a1 1 0 0 1 1-1h4"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="chart-widget-area" id="chartWidgetArea">
+        <div class="chart-loading" id="chartLoading">
+          <div class="skeleton-bars"><i></i><i></i><i></i><i></i><i></i></div>
+          <span>در حال بارگذاری نمودار زنده…</span>
+        </div>
+        <div class="chart-error" id="chartError">
+          <div class="chart-error-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          </div>
+          <h3>اتصال به نمودار برقرار نشد</h3>
+          <p>ممکن است اتصال اینترنت یا مسدودکننده تبلیغات مانع بارگذاری نمودار شده باشد.</p>
+          <button type="button" class="retry-btn" id="retryBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v6h-6"/></svg>
+            تلاش مجدد
+          </button>
+        </div>
+        <div class="tradingview-widget-container" id="tvContainer">
+          <div class="tradingview-widget-container__widget"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ Toast ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toastMsg">لینک کپی شد</span>
+</div>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="wrap footer-inner">
+    <div>نبض بازار · نمودار زنده و تحلیل تکنیکال</div>
+    <a href="index.html">بازگشت به داشبورد اصلی ←</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- Clock ---------- */
+  var clockHM = document.getElementById('clockHM');
+  var clockSec = document.getElementById('clockSec');
+  function tickClock(){
+    var now = new Date();
+    var fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Tehran', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    var parts = {};
+    fmt.formatToParts(now).forEach(function(p){ parts[p.type] = p.value; });
+    if(clockHM) clockHM.textContent = parts.hour + ':' + parts.minute;
+    if(clockSec) clockSec.textContent = ':' + parts.second;
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  /* ---------- Chart widget ---------- */
+  var tvContainer = document.getElementById('tvContainer');
+  var loadingEl = document.getElementById('chartLoading');
+  var errorEl = document.getElementById('chartError');
+  var toolbarLabel = document.getElementById('toolbarLabel');
+  var toolbarIcon = document.getElementById('toolbarIcon');
+  var chartCard = document.getElementById('chartCard');
+  var chips = document.querySelectorAll('.symbol-chip');
+  var loadTimer = null;
+  var mutationObserver = null;
+
+  var initialChip = document.querySelector('.symbol-chip.active') || chips[0];
+  var currentSymbol = initialChip.dataset.symbol;
+
+  function showLoading(){
+    errorEl.classList.remove('show');
+    loadingEl.hidden = false;
+    loadingEl.style.opacity = '1';
+  }
+  function hideLoading(){
+    if(loadingEl.hidden) return;
+    loadingEl.style.opacity = '0';
+    setTimeout(function(){ loadingEl.hidden = true; }, 250);
+  }
+  function showError(){
+    hideLoading();
+    errorEl.classList.add('show');
+  }
+
+  function setActiveChip(symbol){
+    chips.forEach(function(chip){
+      var isActive = chip.dataset.symbol === symbol;
+      chip.classList.toggle('active', isActive);
+      if(isActive){
+        var c = getComputedStyle(chip).getPropertyValue('--chip-c').trim() || '#1E8A55';
+        chartCard.style.setProperty('--accent-live', c);
+      }
+    });
+  }
+
+  function buildWidget(symbol){
+    if(mutationObserver){ mutationObserver.disconnect(); mutationObserver = null; }
+    clearTimeout(loadTimer);
+    tvContainer.innerHTML = '<div class="tradingview-widget-container__widget"></div>';
+
+    showLoading();
+
+    var config = {
+      autosize: true,
+      symbol: symbol,
+      interval: 'D',
+      timezone: 'Asia/Tehran',
+      theme: 'light',
+      style: '1',
+      locale: 'fa_IR',
+      toolbar_bg: '#F4FAF7',
+      enable_publishing: false,
+      withdateranges: true,
+      hide_side_toolbar: false,
+      allow_symbol_change: true,
+      details: false,
+      calendar: false,
+      studies: [],
+      support_host: 'https://www.tradingview.com',
+      overrides: {
+        'paneProperties.background': '#FFFFFF',
+        'paneProperties.backgroundType': 'solid',
+        'paneProperties.vertGridProperties.color': 'rgba(47,174,108,0.07)',
+        'paneProperties.horzGridProperties.color': 'rgba(47,174,108,0.07)',
+        'mainSeriesProperties.candleStyle.upColor': '#2FAE6C',
+        'mainSeriesProperties.candleStyle.downColor': '#E5484D',
+        'mainSeriesProperties.candleStyle.borderUpColor': '#1E8A55',
+        'mainSeriesProperties.candleStyle.borderDownColor': '#C23B3F',
+        'mainSeriesProperties.candleStyle.wickUpColor': '#3FC382',
+        'mainSeriesProperties.candleStyle.wickDownColor': '#E5484D',
+        'mainSeriesProperties.hollowCandleStyle.upColor': '#2FAE6C',
+        'mainSeriesProperties.hollowCandleStyle.downColor': '#E5484D',
+        'mainSeriesProperties.haStyle.upColor': '#2FAE6C',
+        'mainSeriesProperties.haStyle.downColor': '#E5484D'
+      }
+    };
+
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    script.async = true;
+    script.text = JSON.stringify(config);
+    script.onerror = showError;
+    tvContainer.appendChild(script);
+
+    mutationObserver = new MutationObserver(function(){
+      if(tvContainer.querySelector('iframe')){
+        hideLoading();
+        clearTimeout(loadTimer);
+        mutationObserver.disconnect();
+      }
+    });
+    mutationObserver.observe(tvContainer, { childList: true, subtree: true });
+
+    loadTimer = setTimeout(function(){
+      if(!tvContainer.querySelector('iframe')){ showError(); }
+    }, 14000);
+  }
+
+  function loadSymbol(symbol, label, iconHtml){
+    currentSymbol = symbol;
+    toolbarLabel.textContent = label || symbol;
+    if(iconHtml) toolbarIcon.innerHTML = iconHtml;
+    setActiveChip(symbol);
+    buildWidget(symbol);
+  }
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var iconHtml = chip.querySelector('.chip-icon svg').outerHTML;
+      loadSymbol(chip.dataset.symbol, chip.dataset.label, iconHtml);
+    });
+  });
+
+  /* ---------- Fancy symbol search ---------- */
+  var ICONS = {
+    crypto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M11 3v18M7 7h6.5a3 3 0 0 1 0 6H7m0 0h7a3 3 0 0 1 0 6H7"/></svg>',
+    forex: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 9a3.2 3.2 0 0 1 3-2c1.8 0 3.2 1.3 3.2 3s-1.4 3-3.2 3a3.2 3.2 0 0 1-3-2M7 10.5h4M7 13h4"/></svg>',
+    metal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c0-1.1 1.3-2 3-2s3 .8 3 1.8c0 2.4-6 1.2-6 3.6 0 1 1.3 1.8 3 1.8s3-.9 3-2"/></svg>',
+    index: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>',
+    stock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 16V10M12 16V7M16 16v-5"/></svg>',
+    oil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 3.5 5 6.8 5 9.8a5 5 0 0 1-10 0C7 8.8 9 5.5 12 2z"/></svg>'
+  };
+  var CATEGORY_META = {
+    crypto: { label: 'ارز دیجیتال', color: 'var(--crypto)' },
+    forex: { label: 'فارکس', color: 'var(--currency)' },
+    metal: { label: 'فلزات گران‌بها', color: 'var(--gold-accent)' },
+    index: { label: 'شاخص‌های جهانی', color: 'var(--index)' },
+    stock: { label: 'سهام آمریکا', color: 'var(--crypto)' },
+    oil: { label: 'انرژی', color: 'var(--oil)' }
+  };
+  var SYMBOL_DB = [
+    { symbol: 'BINANCE:BTCUSDT', label: 'بیت‌کوین (BTC/USDT)', name: 'بیت‌کوین', cat: 'crypto' },
+    { symbol: 'BINANCE:ETHUSDT', label: 'اتریوم (ETH/USDT)', name: 'اتریوم', cat: 'crypto' },
+    { symbol: 'BINANCE:BNBUSDT', label: 'بایننس‌کوین (BNB/USDT)', name: 'بایننس کوین', cat: 'crypto' },
+    { symbol: 'BINANCE:SOLUSDT', label: 'سولانا (SOL/USDT)', name: 'سولانا', cat: 'crypto' },
+    { symbol: 'BINANCE:XRPUSDT', label: 'ریپل (XRP/USDT)', name: 'ریپل', cat: 'crypto' },
+    { symbol: 'BINANCE:DOGEUSDT', label: 'دوج‌کوین (DOGE/USDT)', name: 'دوج کوین', cat: 'crypto' },
+    { symbol: 'BINANCE:ADAUSDT', label: 'کاردانو (ADA/USDT)', name: 'کاردانو', cat: 'crypto' },
+    { symbol: 'BINANCE:TONUSDT', label: 'تون‌کوین (TON/USDT)', name: 'تون کوین', cat: 'crypto' },
+    { symbol: 'OANDA:XAUUSD', label: 'طلا (XAU/USD)', name: 'طلا', cat: 'metal' },
+    { symbol: 'OANDA:XAGUSD', label: 'نقره (XAG/USD)', name: 'نقره', cat: 'metal' },
+    { symbol: 'FX:EURUSD', label: 'یورو / دلار (EUR/USD)', name: 'یورو به دلار', cat: 'forex' },
+    { symbol: 'FX:GBPUSD', label: 'پوند / دلار (GBP/USD)', name: 'پوند به دلار', cat: 'forex' },
+    { symbol: 'FX:USDJPY', label: 'دلار / ین (USD/JPY)', name: 'دلار به ین', cat: 'forex' },
+    { symbol: 'FX_IDC:USDIRR', label: 'دلار / تومان', name: 'دلار به تومان', cat: 'forex' },
+    { symbol: 'TVC:USOIL', label: 'نفت خام آمریکا (WTI)', name: 'نفت خام', cat: 'oil' },
+    { symbol: 'TVC:UKOIL', label: 'نفت برنت (Brent)', name: 'نفت برنت', cat: 'oil' },
+    { symbol: 'FOREXCOM:SPXUSD', label: 'شاخص S&P 500', name: 'اس اند پی ۵۰۰', cat: 'index' },
+    { symbol: 'FOREXCOM:NSXUSD', label: 'شاخص نزدک ۱۰۰', name: 'نزدک', cat: 'index' },
+    { symbol: 'FOREXCOM:DJI', label: 'شاخص داوجونز', name: 'داوجونز', cat: 'index' },
+    { symbol: 'NASDAQ:AAPL', label: 'اپل (AAPL)', name: 'اپل', cat: 'stock' },
+    { symbol: 'NASDAQ:TSLA', label: 'تسلا (TSLA)', name: 'تسلا', cat: 'stock' },
+    { symbol: 'NASDAQ:MSFT', label: 'مایکروسافت (MSFT)', name: 'مایکروسافت', cat: 'stock' },
+    { symbol: 'NASDAQ:NVDA', label: 'انویدیا (NVDA)', name: 'انویدیا', cat: 'stock' },
+    { symbol: 'NASDAQ:AMZN', label: 'آمازون (AMZN)', name: 'آمازون', cat: 'stock' },
+    { symbol: 'NASDAQ:GOOGL', label: 'گوگل (GOOGL)', name: 'گوگل', cat: 'stock' }
+  ];
+
+  var searchInput = document.getElementById('symbolSearchInput');
+  var searchClear = document.getElementById('symbolSearchClear');
+  var searchPanel = document.getElementById('symbolSearchResults');
+  var FAV_KEY = 'nabzbazar_fav_symbols';
+  var RECENT_KEY = 'nabzbazar_recent_symbols';
+
+  function readList(key){
+    try{ return JSON.parse(localStorage.getItem(key)) || []; } catch(e){ return []; }
+  }
+  function writeList(key, arr){
+    try{ localStorage.setItem(key, JSON.stringify(arr.slice(0, 8))); } catch(e){ /* ignore */ }
+  }
+  function toggleFav(symbol){
+    var favs = readList(FAV_KEY);
+    var i = favs.indexOf(symbol);
+    if(i > -1){ favs.splice(i, 1); } else { favs.unshift(symbol); }
+    writeList(FAV_KEY, favs);
+    return favs;
+  }
+  function pushRecent(symbol){
+    var recents = readList(RECENT_KEY).filter(function(s){ return s !== symbol; });
+    recents.unshift(symbol);
+    writeList(RECENT_KEY, recents);
+  }
+  function findEntry(symbol){
+    for(var i=0;i<SYMBOL_DB.length;i++){ if(SYMBOL_DB[i].symbol === symbol) return SYMBOL_DB[i]; }
+    return null;
+  }
+
+  function renderItem(entry){
+    var meta = CATEGORY_META[entry.cat];
+    var favs = readList(FAV_KEY);
+    var isFav = favs.indexOf(entry.symbol) > -1;
+    var item = document.createElement('div');
+    item.className = 'symbol-search-item';
+    item.setAttribute('role', 'option');
+    item.style.setProperty('--item-c', meta.color);
+    item.innerHTML =
+      '<span class="symbol-search-item-icon">' + ICONS[entry.cat] + '</span>' +
+      '<span class="symbol-search-item-text">' +
+        '<span class="symbol-search-item-name">' + entry.name + '</span><br>' +
+        '<span class="symbol-search-item-code">' + entry.symbol + '</span>' +
+      '</span>' +
+      '<button type="button" class="symbol-search-item-fav' + (isFav ? ' is-fav' : '') + '" aria-label="نماد مورد علاقه" title="افزودن به علاقه‌مندی‌ها">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.3 6.2 20.6l1.3-6.5-4.8-4.5 6.6-.8L12 2.7l2.7 5.9 6.6.9-4.8 4.5 1.3 6.5z"/></svg>' +
+      '</button>';
+    item.addEventListener('click', function(e){
+      if(e.target.closest('.symbol-search-item-fav')) return;
+      selectSymbol(entry);
+    });
+    item.querySelector('.symbol-search-item-fav').addEventListener('click', function(e){
+      e.stopPropagation();
+      toggleFav(entry.symbol);
+      renderResults(searchInput.value.trim());
+    });
+    return item;
+  }
+
+  function selectSymbol(entry){
+    loadSymbol(entry.symbol, entry.label, ICONS[entry.cat]);
+    pushRecent(entry.symbol);
+    searchInput.value = entry.name;
+    closePanel();
+    searchInput.blur();
+    if(history.replaceState){
+      var url = new URL(window.location.href);
+      url.searchParams.set('symbol', entry.symbol);
+      history.replaceState(null, '', url);
+    }
+  }
+
+  function renderResults(query){
+    searchPanel.innerHTML = '';
+    var q = (query || '').trim().toLowerCase();
+
+    if(!q){
+      var recents = readList(RECENT_KEY).map(findEntry).filter(Boolean);
+      var favs = readList(FAV_KEY).map(findEntry).filter(Boolean);
+      if(favs.length){
+        var favLabel = document.createElement('div');
+        favLabel.className = 'symbol-search-group-label';
+        favLabel.textContent = 'مورد علاقه‌ها';
+        searchPanel.appendChild(favLabel);
+        favs.forEach(function(e){ searchPanel.appendChild(renderItem(e)); });
+      }
+      if(recents.length){
+        var recLabel = document.createElement('div');
+        recLabel.className = 'symbol-search-group-label';
+        recLabel.textContent = 'اخیراً مشاهده‌شده';
+        searchPanel.appendChild(recLabel);
+        recents.forEach(function(e){ searchPanel.appendChild(renderItem(e)); });
+      }
+      if(!favs.length && !recents.length){
+        var popLabel = document.createElement('div');
+        popLabel.className = 'symbol-search-group-label';
+        popLabel.textContent = 'محبوب‌ترین‌ها';
+        searchPanel.appendChild(popLabel);
+        SYMBOL_DB.slice(0, 6).forEach(function(e){ searchPanel.appendChild(renderItem(e)); });
+      }
+      return;
+    }
+
+    var results = SYMBOL_DB.filter(function(e){
+      return e.name.toLowerCase().indexOf(q) > -1 ||
+             e.label.toLowerCase().indexOf(q) > -1 ||
+             e.symbol.toLowerCase().indexOf(q) > -1;
+    });
+
+    if(!results.length){
+      var empty = document.createElement('div');
+      empty.className = 'symbol-search-empty';
+      empty.textContent = 'نمادی با این عنوان پیدا نشد';
+      searchPanel.appendChild(empty);
+      return;
+    }
+    results.forEach(function(e){ searchPanel.appendChild(renderItem(e)); });
+  }
+
+  function openPanel(){
+    renderResults(searchInput.value);
+    searchPanel.classList.add('show');
+    searchInput.setAttribute('aria-expanded', 'true');
+  }
+  function closePanel(){
+    searchPanel.classList.remove('show');
+    searchInput.setAttribute('aria-expanded', 'false');
+  }
+
+  searchInput.addEventListener('focus', openPanel);
+  searchInput.addEventListener('input', function(){
+    searchClear.hidden = !searchInput.value;
+    openPanel();
+  });
+  searchClear.addEventListener('click', function(){
+    searchInput.value = '';
+    searchClear.hidden = true;
+    searchInput.focus();
+    openPanel();
+  });
+  document.addEventListener('click', function(e){
+    if(!document.getElementById('symbolSearch').contains(e.target)) closePanel();
+  });
+  searchInput.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closePanel(); searchInput.blur(); }
+    if(e.key === 'Enter'){
+      var first = searchPanel.querySelector('.symbol-search-item');
+      if(first) first.click();
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === '/' && document.activeElement !== searchInput){
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+
+  /* ---------- Copy link ---------- */
+  var toastEl = document.getElementById('toast');
+  var toastMsg = document.getElementById('toastMsg');
+  var toastTimer = null;
+  function showToast(msg){
+    toastMsg.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2200);
+  }
+  document.getElementById('copyLinkBtn').addEventListener('click', function(){
+    var url = new URL(window.location.href);
+    url.searchParams.set('symbol', currentSymbol);
+    var text = url.toString();
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ showToast('لینک این نمودار کپی شد'); }).catch(function(){ showToast('کپی لینک ناموفق بود'); });
+    } else {
+      var tmp = document.createElement('textarea');
+      tmp.value = text;
+      document.body.appendChild(tmp);
+      tmp.select();
+      try{ document.execCommand('copy'); showToast('لینک این نمودار کپی شد'); }catch(e){ showToast('کپی لینک ناموفق بود'); }
+      document.body.removeChild(tmp);
+    }
+  });
+
+  /* ---------- Load symbol from URL, if present ---------- */
+  (function initFromUrl(){
+    var params = new URLSearchParams(window.location.search);
+    var sym = params.get('symbol');
+    if(!sym) return;
+    var entry = findEntry(sym);
+    if(entry){
+      loadSymbol(entry.symbol, entry.label, ICONS[entry.cat]);
+      searchInput.value = entry.name;
+    }
+  })();
+
+  document.getElementById('reloadBtn').addEventListener('click', function(){
+    buildWidget(currentSymbol);
+  });
+  document.getElementById('retryBtn').addEventListener('click', function(){
+    buildWidget(currentSymbol);
+  });
+
+  // Kick things off with whichever chip is marked active by default.
+  setActiveChip(currentSymbol);
+  toolbarIcon.innerHTML = initialChip.querySelector('.chip-icon svg').outerHTML;
+  buildWidget(currentSymbol);
+
+  /* ---------- Fullscreen (custom CSS overlay — works everywhere, no browser
+     permission quirks, no dependency on the native Fullscreen API which can
+     silently fail inside sandboxed/embedded preview frames) ---------- */
+  var fsBtn = document.getElementById('fsBtn');
+  var fsIconExpand = document.getElementById('fsIconExpand');
+  var fsIconCompress = document.getElementById('fsIconCompress');
+  var isFs = false;
+
+  function setFullscreen(on){
+    isFs = on;
+    chartCard.classList.toggle('is-fullscreen', on);
+    document.body.classList.toggle('fs-lock', on);
+    fsIconExpand.style.display = on ? 'none' : '';
+    fsIconCompress.style.display = on ? '' : 'none';
+    fsBtn.setAttribute('aria-label', on ? 'خروج از تمام‌صفحه' : 'تمام‌صفحه');
+    fsBtn.setAttribute('title', on ? 'خروج از تمام‌صفحه' : 'تمام‌صفحه');
+    if(on){ chartCard.scrollIntoView({ block: 'start' }); }
+  }
+
+  fsBtn.addEventListener('click', function(){
+    setFullscreen(!isFs);
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && isFs){ setFullscreen(false); }
+  });
+
+})();
+</script>
+
+</body>
+</html>
