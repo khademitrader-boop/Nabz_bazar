@@ -640,7 +640,7 @@
   }
 
   /* ---------- Advanced chart CTA ---------- */
-  #advanced-chart-cta{ padding: 8px 0 48px; }
+  #advanced-chart-cta, #notes-cta{ padding: 8px 0 48px; }
   .chart-cta{
     display: flex;
     align-items: center;
@@ -1050,6 +1050,35 @@
   .contact-pills .contact-pill{ margin-top: 0; }
   .contact-pill:hover{ background: var(--panel-2); border-color: var(--green); transform: translateY(-1px); }
   .contact-pill svg{ width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ---------- Notes page hero (notes.html) ---------- */
+  .notes-hero{
+    position: relative;
+    padding: 36px 0 24px;
+    overflow: hidden;
+  }
+  .notes-hero-bg{
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: .5;
+    mask-image: radial-gradient(ellipse 75% 100% at 50% 0%, #000 10%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 100% at 50% 0%, #000 10%, transparent 78%);
+    pointer-events: none;
+  }
+  .notes-hero-inner{ position: relative; z-index: 1; text-align: center; }
+  .notes-hero-inner h1{
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    max-width: 720px;
+  }
+  .notes-hero-inner p{
+    color: var(--muted);
+    font-size: .98rem;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .notes-page-section{ padding: 18px 0 60px; }
 
   /* ---------- Girih divider ---------- */
   .girih-divider{
