@@ -235,46 +235,48 @@
     if(notesCalendar){ notesCalendar.render(); }
   });
 
-  function updateChip(){
-    if(!calSupported){
-      calChipDate.textContent = 'تقویم در دسترس نیست';
-      return;
-    }
-    calChipDate.textContent = chipFmt.format(new Date());
-  }
-
-  updateChip();
-  setInterval(updateChip, 60000);
-
-  calBtn.addEventListener('click', function(){
-    var open = calPopover.hasAttribute('hidden');
-    if(open){
-      if(headerCalendar){ headerCalendar.resetToToday(); }
-      if(window.innerWidth <= 640){
-        var headerEl = document.querySelector('header');
-        var rect = headerEl.getBoundingClientRect();
-        calPopover.style.top = (rect.bottom + 8) + 'px';
-      }else{
-        calPopover.style.top = '';
+  // The header calendar button/popover (calBtn, calPopover, calChipDate)
+  // only exist on pages that ship the full header widget (index.html).
+  // Pages like notes.html include this file just for the inline calendar
+  // and the note modal, so all of the code below is skipped there.
+  if(calBtn && calPopover && calChipDate){
+    function updateChip(){
+      if(!calSupported){
+        calChipDate.textContent = 'تقویم در دسترس نیست';
+        return;
       }
-      calPopover.removeAttribute('hidden');
-      calBtn.setAttribute('aria-expanded', 'true');
-    }else{
-      calPopover.setAttribute('hidden', '');
-      calBtn.setAttribute('aria-expanded', 'false');
+      calChipDate.textContent = chipFmt.format(new Date());
     }
-  });
 
-  document.addEventListener('click', function(e){
-    if(noteModalOverlay && !noteModalOverlay.hasAttribute('hidden') && noteModalOverlay.contains(e.target)){ return; }
-    if(!calPopover.contains(e.target) && e.target !== calBtn && !calBtn.contains(e.target)){
-      calPopover.setAttribute('hidden', '');
-      calBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  if(!calSupported){
     updateChip();
+    setInterval(updateChip, 60000);
+
+    calBtn.addEventListener('click', function(){
+      var open = calPopover.hasAttribute('hidden');
+      if(open){
+        if(headerCalendar){ headerCalendar.resetToToday(); }
+        if(window.innerWidth <= 640){
+          var headerEl = document.querySelector('header');
+          var rect = headerEl.getBoundingClientRect();
+          calPopover.style.top = (rect.bottom + 8) + 'px';
+        }else{
+          calPopover.style.top = '';
+        }
+        calPopover.removeAttribute('hidden');
+        calBtn.setAttribute('aria-expanded', 'true');
+      }else{
+        calPopover.setAttribute('hidden', '');
+        calBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('click', function(e){
+      if(noteModalOverlay && !noteModalOverlay.hasAttribute('hidden') && noteModalOverlay.contains(e.target)){ return; }
+      if(!calPopover.contains(e.target) && e.target !== calBtn && !calBtn.contains(e.target)){
+        calPopover.setAttribute('hidden', '');
+        calBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
 })();
