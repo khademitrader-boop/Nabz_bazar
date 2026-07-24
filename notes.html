@@ -13,13 +13,13 @@
   }catch(e){}
 })();
 </script>
-<title>نمودار پیشرفته | نبض بازار</title>
-<meta name="description" content="نمودار زنده و تعاملی هر نمادی؛ ارز دیجیتال، سهام، طلا و فارکس — با جست‌وجوی نماد و ابزار تحلیل تکنیکال کامل.">
+<title>یادداشت‌ها | نبض بازار</title>
+<meta name="description" content="یادداشت‌های روزانه همراه با تقویم شمسی؛ روی هر روز بزنید و برایش یادداشت بنویسید.">
 <meta name="theme-color" content="#1E8A55">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<meta property="og:title" content="نمودار پیشرفته | نبض بازار">
-<meta property="og:description" content="نمودار زنده و تعاملی هر نمادی که بخواهید، با جست‌وجوی نماد و ابزار تحلیل تکنیکال کامل.">
+<meta property="og:title" content="یادداشت‌ها | نبض بازار">
+<meta property="og:description" content="یادداشت‌های روزانه همراه با تقویم شمسی؛ روی هر روز بزنید و برایش یادداشت بنویسید.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fa_IR">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='19' fill='%231E8A55'/%3E%3Cpath d='M10 22 L15 22 L18 14 L22 28 L25 18 L28 22 L30 22' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
@@ -29,9 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://s3.tradingview.com" crossorigin>
 
-<link rel="stylesheet" href="css/chart.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -85,11 +84,11 @@
         </span>
         <svg class="mainnav-sheet-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
       </a>
-      <a href="index.html#notes" class="mainnav-sheet-link">
-        <span class="mainnav-sheet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 9h18M8 2v4M16 2v4M8 14h5"/></svg></span>
+      <a href="chart.html" class="mainnav-sheet-link">
+        <span class="mainnav-sheet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
         <span class="mainnav-sheet-text">
-          <b>یادداشت‌ها</b>
-          <small>یادداشت روزانه با تقویم شمسی</small>
+          <b>نمودار پیشرفته</b>
+          <small>نمودار تعاملی هر نماد</small>
         </span>
         <svg class="mainnav-sheet-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
       </a>
@@ -102,9 +101,9 @@
         <svg class="mainnav-sheet-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
       </a>
       <span class="mainnav-sheet-link is-active" aria-current="page">
-        <span class="mainnav-sheet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+        <span class="mainnav-sheet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 9h18M8 2v4M16 2v4M8 14h5"/></svg></span>
         <span class="mainnav-sheet-text">
-          <b>نمودار پیشرفته</b>
+          <b>یادداشت‌ها</b>
           <small>همین صفحه‌ای که هستید</small>
         </span>
       </span>
@@ -115,107 +114,93 @@
 </header>
 
 <!-- ============ Page hero ============ -->
-<section class="chart-hero">
-  <svg class="chart-hero-bg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+<section class="notes-hero">
+  <svg class="notes-hero-bg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
     <defs>
-      <pattern id="girihChart" width="90" height="90" patternUnits="userSpaceOnUse">
+      <pattern id="girihNotes" width="90" height="90" patternUnits="userSpaceOnUse">
         <g stroke="#2FAE6C" stroke-width="1" fill="none" opacity="0.3">
           <rect x="20" y="20" width="50" height="50" transform="rotate(45 45 45)"/>
           <circle cx="45" cy="45" r="6"/>
         </g>
       </pattern>
     </defs>
-    <rect width="800" height="300" fill="url(#girihChart)"/>
+    <rect width="800" height="300" fill="url(#girihNotes)"/>
   </svg>
 
-  <div class="wrap chart-hero-inner">
-    <h1>نمودار <span class="accent">پیشرفته</span> هر نماد بازار</h1>
-    <p>هر نمادی که بخواهید را جست‌وجو کنید؛ ارز دیجیتال، طلا، فارکس یا سهام جهانی — با ابزار تحلیل تکنیکال کامل.</p>
+  <div class="wrap notes-hero-inner">
+    <h1>یادداشت‌های <span class="accent">روزانه</span> شما</h1>
+    <p>روی هر روز از تقویم زیر بزنید تا برایش یادداشت بنویسید؛ یادداشت‌های ثبت‌شده همین‌جا و کنار تاریخشان فهرست می‌شوند.</p>
   </div>
 </section>
 
-<!-- ============ Chart ============ -->
-<main class="chart-section">
+<!-- ============ Notes ============ -->
+<main class="notes-page-section">
   <div class="wrap">
-    <!-- ============ Full symbol list ============ -->
-    <div class="symbol-list" id="symbolList">
-      <div class="symbol-list-head">
-        <h2>فهرست کامل نمادها</h2>
-        <p>همه نمادهای قابل نمایش، دسته‌بندی‌شده بر اساس بازار. روی هر نماد بزنید تا در نمودار پایین باز شود.</p>
-      </div>
-      <div class="symbol-list-groups" id="symbolListGroups"></div>
-    </div>
+    <div class="notes-layout">
 
-    <div class="chart-card" id="chartCard">
-      <div class="chart-toolbar">
-        <div class="chart-toolbar-info">
-          <span class="chart-toolbar-icon" id="toolbarIcon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
-          </span>
-          <div class="chart-toolbar-text">
-            <div class="chart-toolbar-label" id="toolbarLabel">بیت‌کوین (BTC/USDT)</div>
-            <div class="chart-toolbar-sub">برای جست‌وجوی نماد دیگر، روی نام نماد در نمودار بزنید</div>
-          </div>
+      <div class="notes-calendar-card">
+        <div class="cal-head">
+          <button class="cal-nav" id="notesCalPrev" type="button" aria-label="ماه قبل">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <span class="cal-title" id="notesCalTitle">—</span>
+          <button class="cal-nav" id="notesCalNext" type="button" aria-label="ماه بعد">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
         </div>
-        <div class="chart-toolbar-actions">
-          <button type="button" class="icon-btn" id="copyLinkBtn" title="کپی لینک این نمودار" aria-label="کپی لینک این نمودار">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.36-1.36"/></svg>
-          </button>
-          <button type="button" class="icon-btn" id="reloadBtn" title="بارگذاری مجدد نمودار" aria-label="بارگذاری مجدد نمودار">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v6h-6"/></svg>
-          </button>
-          <button type="button" class="icon-btn fs-btn" id="fsBtn" title="تمام‌صفحه" aria-label="تمام‌صفحه">
-            <svg id="fsIconExpand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-            <svg id="fsIconCompress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M9 3v4a1 1 0 0 1-1 1H4M15 3v4a1 1 0 0 0 1 1h4M9 21v-4a1 1 0 0 0-1-1H4M15 21v-4a1 1 0 0 1 1-1h4"/></svg>
-          </button>
+        <div class="cal-weekdays">
+          <span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span>
+        </div>
+        <div class="cal-days" id="notesCalDays"></div>
+        <div class="notes-calendar-foot">
+          <span class="cal-foot" id="notesCalFoot">—</span>
+          <button class="notes-cal-today" id="notesCalToday" type="button">امروز</button>
         </div>
       </div>
 
-      <div class="chart-widget-area" id="chartWidgetArea">
-        <div class="chart-loading" id="chartLoading">
-          <div class="skeleton-bars"><i></i><i></i><i></i><i></i><i></i></div>
-          <span>در حال بارگذاری نمودار زنده…</span>
-        </div>
-        <div class="chart-error" id="chartError">
-          <div class="chart-error-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-          </div>
-          <h3>اتصال به نمودار برقرار نشد</h3>
-          <p>ممکن است اتصال اینترنت یا مسدودکننده تبلیغات مانع بارگذاری نمودار شده باشد.</p>
-          <button type="button" class="retry-btn" id="retryBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v6h-6"/></svg>
-            تلاش مجدد
-          </button>
-        </div>
-        <div class="tradingview-widget-container" id="tvContainer">
-          <div class="tradingview-widget-container__widget"></div>
+      <div class="notes-list-wrap">
+        <div class="notes-list" id="notesList"></div>
+
+        <div class="notes-empty" id="notesEmpty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 9h18M8 2v4M16 2v4M8 14h5"/></svg>
+          <p>هنوز یادداشتی ثبت نشده. روی روز موردنظرتان در تقویم کنار این متن بزنید و یادداشت بنویسید.</p>
         </div>
       </div>
+
     </div>
   </div>
 </main>
 
-<!-- ============ Toast ============ -->
-<div class="toast" id="toast" role="status" aria-live="polite">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-  <span id="toastMsg">لینک کپی شد</span>
-</div>
-
 <!-- ============ Footer ============ -->
 <footer>
   <div class="wrap footer-inner">
-    <div>نبض بازار · نمودار زنده و تحلیل تکنیکال</div>
+    <div>نبض بازار · یادداشت روزانه با تقویم شمسی</div>
     <a href="index.html">بازگشت به داشبورد اصلی ←</a>
   </div>
 </footer>
 
+<!-- ============ Note modal ============ -->
+<div class="note-modal-overlay" id="noteModalOverlay" hidden>
+  <div class="note-modal" role="dialog" aria-modal="true" aria-label="یادداشت روز">
+    <div class="note-modal-head">
+      <span class="note-modal-title" id="noteModalTitle">یادداشت روز</span>
+      <button class="note-modal-close" id="noteModalClose" type="button" aria-label="بستن">×</button>
+    </div>
+    <textarea class="note-modal-textarea" id="noteModalTextarea" placeholder="یادداشت خود را برای این روز بنویسید..."></textarea>
+    <div class="note-modal-actions">
+      <button class="note-modal-delete" id="noteModalDelete" type="button">حذف یادداشت</button>
+      <button class="note-modal-save" id="noteModalSave" type="button">ذخیره</button>
+    </div>
+  </div>
+</div>
 
 <script src="js/theme.js" defer></script>
 <script src="js/header-scroll.js" defer></script>
 <script src="js/nav.js" defer></script>
-<script src="js/chart-data.js" defer></script>
 <script src="js/chart-clock.js" defer></script>
-<script src="js/chart.js" defer></script>
+<script src="js/notes-store.js" defer></script>
+<script src="js/calendar.js" defer></script>
+<script src="js/notes-list.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 
 </body>

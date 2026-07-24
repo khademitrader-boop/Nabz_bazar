@@ -7,12 +7,13 @@
    left alone in the fetch handler below and always goes straight to the
    network, so a stale cache can never show an out-of-date price or chart. */
 
-var CACHE_VERSION = 'v1';
+var CACHE_VERSION = 'v2';
 var STATIC_CACHE = 'nb-shell-' + CACHE_VERSION;
 
 var PRECACHE_URLS = [
   'index.html',
   'chart.html',
+  'notes.html',
   'css/style.css',
   'css/chart.css',
   'js/theme.js',
