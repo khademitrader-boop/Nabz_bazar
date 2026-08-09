@@ -1,0 +1,389 @@
+/* ============ Forex Sessions Clock (forex-clock.html) ============
+   Reuses the site's existing design tokens (--panel, --green, --currency,
+   --gold-accent, --crypto, --radius, --shadow, ...) so it matches the rest
+   of the site in both light and dark mode without introducing new colors. */
+
+/* ---------- Page hero (self-contained copy of the chart/analysis hero
+   pattern, so this page doesn't need to pull in css/chart.css) ---------- */
+.fx-hero{
+  position: relative;
+  padding: 36px 0 24px;
+  overflow: hidden;
+  text-align: center;
+}
+.fx-hero h1{
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  max-width: 720px;
+  margin: 0 auto 12px;
+  color: var(--ink);
+}
+.fx-hero h1 .accent{
+  background: linear-gradient(95deg, var(--green-deep), var(--green-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.fx-hero p{
+  color: var(--muted);
+  font-size: .98rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ---------- Card ---------- */
+.fx-clock-section{ padding: 8px 0 56px; }
+
+.fx-clock-card{
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lift);
+  padding: 28px 26px 30px;
+}
+
+.fx-clock-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.fx-clock-head h2{
+  font-size: 1.15rem;
+  margin: 0;
+}
+.fx-clock-times{
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.fx-clock-times span{
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: .78rem;
+  color: var(--muted);
+}
+/* dir="ltr" on the number itself keeps "16:05" reading left-to-right no
+   matter what - without it, a bare digit/colon run with no letters of its
+   own can get its start/end reordered by the page's RTL base direction. */
+.fx-clock-times b{
+  direction: ltr;
+  unicode-bidi: isolate;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: .92rem;
+  letter-spacing: .02em;
+}
+
+/* ---------- Dial ----------
+   Modeled on a classic "world trading session" wall clock: a navy bezel
+   with rotated 24h numerals, an inner minute track, four concentric
+   session arcs with curved market labels riding them, a dotted ring +
+   soft wedge marking the two peak-liquidity overlap windows, and a real
+   hour+minute hand pair (the hour hand rides the 24h dial once a day,
+   the minute hand rides the inner minute track once an hour). */
+.fx-dial-wrap{
+  width: min(380px, 100%);
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin: 0 auto 8px;
+  position: relative;
+}
+.fx-dial{
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 24px rgba(20,60,40,.16));
+}
+
+/* Navy bezel: two hairline edges plus a thick colored ring between them
+   (drawn via a wide stroke on a plain circle) so the hour numerals have
+   a fixed, theme-independent band to sit on, the way a physical clock's
+   printed bezel would. */
+.fx-dial-ring-edge{
+  fill: none;
+  stroke: #0f1b33;
+  stroke-width: 1;
+}
+.fx-dial-ring{
+  fill: none;
+  stroke: #1c2b4a;
+  stroke-width: 20;
+}
+:root[data-theme="dark"] .fx-dial-ring{ stroke: #223357; }
+
+.fx-dial-face{
+  fill: var(--panel-2);
+  stroke: var(--line-soft);
+  stroke-width: 1.5;
+}
+
+.fx-dial-tick{
+  stroke: var(--muted-2);
+  stroke-width: 1.2;
+}
+.fx-dial-tick.is-major{
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+.fx-dial-hnum{
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  fill: #f4f7fb;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* Inner minute track: fine ticks + numerals every 5, in a dedicated teal
+   distinct from the hour numerals, matching a real clock's minute ring. */
+.fx-dial-mtick{
+  stroke: color-mix(in srgb, var(--green-bright) 55%, var(--muted-2));
+  stroke-width: 1.2;
+}
+.fx-dial-mnum{
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  fill: var(--green-deep);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+:root[data-theme="dark"] .fx-dial-mnum{ fill: var(--green-bright); }
+
+/* Four concentric rings, outermost = New York down to innermost = Sydney,
+   spaced so no two ever overlap - each stays visible on its own even when
+   several sessions are open at once. */
+.fx-dial-arc{
+  fill: none;
+  stroke-width: 13;
+  stroke-linecap: round;
+  opacity: .32;
+  transition: opacity .35s ease;
+}
+.fx-dial-arc.is-active{
+  opacity: 1;
+}
+.fx-dial-arclabel{
+  font-family: var(--font-mono);
+  font-size: 7.2px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  fill: var(--panel);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Dotted "peak liquidity" ring: lights up teal only while both sessions
+   in that overlap pair are open. */
+.fx-dial-odot{
+  fill: var(--muted-2);
+  opacity: .45;
+  transition: fill .35s ease, opacity .35s ease;
+}
+.fx-dial-odot.is-active{
+  fill: var(--green-bright);
+  opacity: 1;
+}
+
+/* Soft background wedge behind the whole overlap window - the pale
+   quadrant a physical version of this clock would print. */
+.fx-dial-wedge{
+  fill: var(--muted-2);
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.fx-dial-wedge.is-active{
+  fill: color-mix(in srgb, var(--green-bright) 55%, var(--currency));
+  opacity: .16;
+}
+
+.fx-dial-brand{
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  fill: var(--muted);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.fx-dial-hand{
+  stroke: var(--ink);
+  stroke-linecap: round;
+  /* x1/y1/x2/y2 are plain SVG geometry attributes, updated directly in JS
+     as plain numbers - not a CSS/SVG "transform", so there's no ambiguity
+     about which coordinate system or rotation origin applies (that
+     mismatch was what made an earlier version's hand jump to the wrong
+     place). Transitioning the endpoints themselves animates the sweep. */
+  transition: x1 .6s cubic-bezier(.3,.7,.2,1), y1 .6s cubic-bezier(.3,.7,.2,1),
+              x2 .6s cubic-bezier(.3,.7,.2,1), y2 .6s cubic-bezier(.3,.7,.2,1);
+}
+.fx-dial-hand-hour{ stroke-width: 4.5; }
+.fx-dial-hand-min{ stroke-width: 3; }
+.fx-dial-hand-tip{
+  fill: var(--green-bright);
+  stroke: var(--panel);
+  stroke-width: 2;
+  transition: cx .6s cubic-bezier(.3,.7,.2,1), cy .6s cubic-bezier(.3,.7,.2,1);
+}
+.fx-dial-hub{
+  fill: var(--ink);
+  stroke: var(--panel);
+  stroke-width: 1.5;
+}
+
+.fx-dial-center-time{
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 800;
+  fill: var(--ink);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.fx-dial-center-sub{
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  fill: var(--muted);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .fx-dial-hand, .fx-dial-hand-tip{ transition: none; }
+}
+
+/* ---------- Legend / session list ---------- */
+.fx-sessions{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 26px;
+}
+@media (max-width: 620px){
+  .fx-sessions{ grid-template-columns: 1fr; }
+}
+
+.fx-session{
+  --s-c: var(--muted-2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-soft);
+  background: var(--bg-soft);
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.fx-session-ring{
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--s-c) 16%, var(--panel));
+}
+.fx-session-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--s-c);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--s-c) 55%, transparent);
+}
+
+.fx-session-text{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.fx-session-name{
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--ink);
+}
+/* Same RTL-safety as .fx-clock-times b above: an isolated, explicitly
+   left-to-right run so "08:00 – 17:00" can never come out flipped as
+   "17:00 – 08:00" inside the page's right-to-left flow. */
+.fx-session-range{
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  color: var(--muted);
+}
+
+.fx-session-state{
+  margin-inline-start: auto;
+  flex: 0 0 auto;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--panel-2);
+  white-space: nowrap;
+}
+
+.fx-session.is-active{
+  background: color-mix(in srgb, var(--s-c) 10%, var(--bg-soft));
+  border-color: color-mix(in srgb, var(--s-c) 45%, transparent);
+  box-shadow: 0 8px 20px -14px color-mix(in srgb, var(--s-c) 70%, transparent);
+}
+.fx-session.is-active .fx-session-dot{
+  animation: fxDotPulse 1.8s ease-out infinite;
+}
+.fx-session.is-active .fx-session-state{
+  color: var(--s-c);
+  background: color-mix(in srgb, var(--s-c) 18%, var(--panel));
+}
+@keyframes fxDotPulse{
+  0%  { box-shadow: 0 0 0 0 color-mix(in srgb, var(--s-c) 55%, transparent); }
+  70% { box-shadow: 0 0 0 9px transparent; }
+  100%{ box-shadow: 0 0 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce){
+  .fx-session.is-active .fx-session-dot{ animation: none; }
+}
+
+/* Overlap banner: shown only when 2+ sessions are active at once. */
+.fx-overlap{
+  display: none;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin: 18px auto 0;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--green-deep);
+  background: color-mix(in srgb, var(--green) 13%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--green) 32%, transparent);
+}
+:root[data-theme="dark"] .fx-overlap{ color: var(--green-bright); }
+.fx-overlap.show{ display: inline-flex; }
+
+.fx-clock-note{
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: .76rem;
+  color: var(--muted-2);
+}
